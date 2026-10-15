@@ -14,7 +14,7 @@ export function BrandMark({
   const height = size === "lg" ? "h-12" : size === "sm" ? "h-7" : "h-9";
   return (
     <img
-      src={logoAsset.url}
+      src={`https://id-preview--048e1462-6b93-4c66-9fd9-0f66db5dba9d.lovable.app${logoAsset.url}`}
       alt="Jane Street"
       width={600}
       height={175}
