@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1792069893738,
+      "tag": "0000_restore_case_closet",
+      "breakpoints": true
+    }
+  ]
 }
