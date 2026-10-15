@@ -1,3 +1,5 @@
+import { SecuritySettings } from "@/components/SecuritySettings";
+import { LegalEditor } from "@/components/LegalPage";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
