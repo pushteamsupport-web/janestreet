@@ -8,7 +8,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "@/components/BrandMark";
 import { PasswordInput } from "@/components/PasswordInput";
-import { lovable } from "@/integrations/lovable/index";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -35,6 +34,8 @@ export const Route = createFileRoute("/auth")({
           "Sign in to your Jane Street account or create a verified account to file a case.",
       },
       { property: "og:title", content: "Login or Create Account" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content: "Secure access to your Jane Street case file.",
@@ -199,21 +200,6 @@ function AuthPage() {
       return;
     }
     setPendingEmail(parsed.data.email);
-  }
-
-  async function handleGoogle() {
-    setBusy(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (result.error) {
-      setBusy(false);
-      toast.error("Google sign-in could not be started. Please try again.");
-      return;
-    }
-    if (result.redirected) return;
-    setBusy(false);
-    await continueAfterPassword();
   }
 
   async function handleLogin(event: React.FormEvent) {
@@ -416,24 +402,6 @@ function AuthPage() {
                 {busy ? "Please wait…" : isSignup ? "Start Your Case — It's Free" : "Log In"}
               </Button>
             </form>
-
-            <div className="mt-5">
-              <div className="flex items-center gap-3">
-                <span className="h-px flex-1 bg-border" />
-                <span className="text-xs uppercase tracking-wide text-muted-foreground">or</span>
-                <span className="h-px flex-1 bg-border" />
-              </div>
-              <Button
-                type="button"
-                variant="outline"
-                size="lg"
-                className="mt-4 h-12 w-full text-base font-semibold"
-                disabled={busy}
-                onClick={handleGoogle}
-              >
-                Continue with Google
-              </Button>
-            </div>
 
             {!isSignup && (
               <div className="mt-4 text-center">

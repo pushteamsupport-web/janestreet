@@ -1,0 +1,4 @@
+- [ ] Underline footer legal links.
+- [ ] Remove Google button from sign-in and sign-up.
+- [ ] Confirm saved cases immediately and show them on the dashboard without waiting for photos.
+- [ ] Test case submission and page changes.

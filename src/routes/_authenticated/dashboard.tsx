@@ -48,6 +48,8 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
         content: "Track your recovery cases and update your details in one secure place.",
       },
       { property: "og:title", content: "Your Case Dashboard" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content: "Track your recovery cases in one secure place.",
@@ -132,21 +134,27 @@ function Dashboard() {
           asset_type: values.assetType,
           description: values.description,
         })
-        .select("id")
+        .select("*")
         .single();
       if (error) throw error;
-      if (values.files.length > 0 && created) {
-        await uploadCaseProofFiles({
-          caseId: created.id,
-          userId: auth.user.id,
-          files: values.files,
-        });
-      }
+      if (!created) throw new Error("Your case could not be saved. Please try again.");
+      return { created, userId: auth.user.id };
     },
-    onSuccess: () => {
+    onSuccess: ({ created, userId }, values) => {
+      // Populate the list before navigating; the readback runs in the background.
+      queryClient.setQueryData<CaseItem[]>(["cases"], (previous = []) => [
+        created,
+        ...previous.filter((item) => item.id !== created.id),
+      ]);
+      setProofFiles([]);
       toast.success("Case submitted. Our team will review it shortly.");
-      queryClient.invalidateQueries({ queryKey: ["cases"] });
-      navigate({ to: "/dashboard", search: { tab: "cases" }, replace: true });
+      void navigate({ to: "/dashboard", search: { tab: "cases" }, replace: true });
+      void queryClient.invalidateQueries({ queryKey: ["cases"] });
+      if (values.files.length > 0) {
+        void uploadCaseProofFiles({ caseId: created.id, userId, files: values.files })
+          .then(() => queryClient.invalidateQueries({ queryKey: ["attachments", created.id] }))
+          .catch(() => toast.warning("Your case is saved, but some proof photos could not upload. Please contact support to add them."));
+      }
     },
     onError: (error: Error) => toast.error(error.message),
   });
@@ -174,8 +182,6 @@ function Dashboard() {
       description: parsed.data.description,
       files: proofFiles,
     });
-    setProofFiles([]);
-    event.currentTarget.reset();
   }
 
   const cases = (casesQuery.data ?? []) as CaseItem[];
