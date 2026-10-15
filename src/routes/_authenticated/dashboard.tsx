@@ -152,7 +152,7 @@ function Dashboard() {
       void queryClient.invalidateQueries({ queryKey: ["cases"] });
       if (values.files.length > 0) {
         void uploadCaseProofFiles({ caseId: created.id, userId, files: values.files })
-          .then(() => queryClient.invalidateQueries({ queryKey: ["attachments", created.id] }))
+          .then(() => queryClient.invalidateQueries({ queryKey: ["case-attachments", created.id] }))
           .catch(() => toast.warning("Your case is saved, but some proof photos could not upload. Please contact support to add them."));
       }
     },
