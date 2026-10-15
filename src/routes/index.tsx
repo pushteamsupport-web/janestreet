@@ -48,7 +48,7 @@ function Index() {
   return (
     <div className="relative flex h-dvh min-h-0 flex-col overflow-hidden bg-background">
       <header className="z-30 shrink-0 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-5 lg:h-18">
+        <div className="flex h-16 w-full items-center justify-between gap-3 px-5 lg:h-18">
           <BrandMark />
           <nav aria-label="Account" className="flex shrink-0 items-center gap-1 text-header-auth">
             <Button asChild variant="link" className="px-1 text-sm font-semibold text-header-auth sm:px-2 sm:text-base">
@@ -62,7 +62,7 @@ function Index() {
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto grid min-h-0 w-full max-w-6xl flex-1 grid-rows-[auto_minmax(0,1fr)] gap-2 overflow-hidden px-5 py-2 lg:grid-cols-2 lg:grid-rows-1 lg:items-start lg:gap-10">
+      <main className="relative z-10 grid min-h-0 w-full flex-1 grid-rows-[auto_minmax(0,1fr)] gap-2 overflow-hidden px-5 py-2 lg:grid-cols-2 lg:grid-rows-1 lg:items-start lg:gap-10">
         {/* Hero */}
         <section>
           <h1 className="text-2xl font-extrabold leading-[1.12] tracking-tight min-[430px]:text-3xl lg:text-4xl">
