@@ -19,6 +19,8 @@ export const Route = createFileRoute("/reset-password")({
         content: "Choose a new password for your Jane Street account.",
       },
       { property: "og:title", content: "Set a New Password" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       {
         property: "og:description",
         content: "Choose a new password for your account.",

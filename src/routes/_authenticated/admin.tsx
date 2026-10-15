@@ -68,6 +68,8 @@ export const Route = createFileRoute("/_authenticated/admin")({
         content: "Review client cases, publish recovery proof and answer support chats.",
       },
       { property: "og:title", content: "Admin Console" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { property: "og:description", content: "Manage Jane Street client cases and support chats." },
     ],
   }),

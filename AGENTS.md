@@ -11,3 +11,4 @@
 
 - Keep the imported site's TanStack routes and visual design as the app's structure; take package versions and Cloud clients from the target starter so the app never binds to stale platform settings.
 - Keep authorization in database roles and ownership policies; never grant administrator access from user-editable metadata or an unverified email.
+- Case submission caches the confirmed full database row before navigation and uploads proof separately, so slow or failed photos cannot hide a saved case or encourage duplicate filing.

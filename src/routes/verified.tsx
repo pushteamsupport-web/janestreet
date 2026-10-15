@@ -14,6 +14,8 @@ export const Route = createFileRoute("/verified")({
         content: "Your Jane Street email is verified — continue to your case dashboard.",
       },
       { property: "og:title", content: "Email Verified | Jane Street" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       {
         property: "og:description",
         content: "Your email is verified. Continue to your case dashboard.",
