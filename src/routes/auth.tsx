@@ -319,7 +319,7 @@ function AuthPage() {
             </h1>
             <p className="mt-2 text-center text-sm text-muted-foreground">
               {isSignup
-                ? "Start your case in minutes. It's free — you only pay 15% after a completed recovery."
+                ? "Start your case in minutes. It's free — you only pay 15% government tax after a completed recovery."
                 : "Log in to check your case progress."}
             </p>
 
