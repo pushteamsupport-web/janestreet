@@ -1,9 +1,7 @@
-import { useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Lock, Headset } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "@/components/BrandMark";
-import landingBg from "@/assets/landing-bg.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -47,25 +45,8 @@ const STEPS = [
 ];
 
 function Index() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    videoRef.current?.play().catch(() => {});
-  }, []);
-
   return (
     <div className="relative flex h-dvh min-h-0 flex-col overflow-hidden bg-background">
-      <video
-        ref={videoRef}
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover opacity-15"
-        src={landingBg.url}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        aria-hidden="true"
-      />
       <header className="z-30 shrink-0 border-b border-border bg-background/95 backdrop-blur">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-5 lg:h-18">
           <BrandMark />
