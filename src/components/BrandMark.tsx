@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
-import logoAsset from "@/assets/jane-street-header-logo.jpeg.asset.json";
 
 /**
  * Jane Street brand lockup: the circular mark and wordmark from the supplied logo.
+ * Served from /public so the logo works on any host (Vercel included).
  */
 export function BrandMark({
   className,
@@ -14,7 +14,7 @@ export function BrandMark({
   const height = size === "lg" ? "h-12" : size === "sm" ? "h-7" : "h-9";
   return (
     <img
-      src={logoAsset.url}
+      src="/jane-street-logo.jpeg"
       alt="Jane Street"
       width={600}
       height={175}
