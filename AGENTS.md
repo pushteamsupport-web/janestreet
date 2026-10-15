@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep the imported site's TanStack routes and visual design as the app's structure; take package versions and Cloud clients from the target starter so the app never binds to stale platform settings.
+- Keep authorization in database roles and ownership policies; never grant administrator access from user-editable metadata or an unverified email.
