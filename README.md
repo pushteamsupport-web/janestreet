@@ -1,16 +1,14 @@
-# Jane Street Legal Footer
-
-this is my website zip file I want you to help me do something, at the down of the landing page I want you to add this to it. © 2026 Jane Street Group, LLC. All rights reserved | Privacy
+# Welcome to your Lovable project
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/048e1462-6b93-4c66-9fd9-0f66db5dba9d).
+Open your project in the [Lovable editor](https://lovable.dev) and keep building.
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
+- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -22,3 +20,10 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Built with
+
+- TanStack Start
+- TypeScript
+- React
+- Tailwind CSS
