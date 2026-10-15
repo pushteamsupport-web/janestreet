@@ -185,6 +185,27 @@ export type Database = {
           },
         ]
       }
+      legal_pages: {
+        Row: {
+          body: string
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           attachment_name: string | null
