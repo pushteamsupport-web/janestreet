@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Lock, Headset } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "@/components/BrandMark";
+import landingBg from "@/assets/landing-bg.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
