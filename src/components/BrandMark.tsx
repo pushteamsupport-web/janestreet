@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
-import logoAsset from "@/assets/jane-street-header-logo.jpeg.asset.json";
 
 /**
  * Jane Street brand lockup: the circular mark and wordmark from the supplied logo.
+ * Served from /public so the logo works on any host (Vercel included).
  */
 export function BrandMark({
   className,
