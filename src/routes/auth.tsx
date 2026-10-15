@@ -192,9 +192,8 @@ function AuthPage() {
       return;
     }
 
-    // Email confirmation is disabled: a session comes back immediately, so go
-    // straight into the app. The "verify your email" screen only shows if the
-    // backend ever re-enables confirmation.
+    // Email confirmation is required: no session comes back, so show the
+    // "verify your email" screen with a resend option.
     if (data.session) {
       await goHome();
       return;
@@ -222,6 +221,7 @@ function AuthPage() {
     if (error) {
       if (error.message.toLowerCase().includes("not confirmed")) {
         toast.error("Please verify your email first. Check your inbox for the link.");
+        setPendingEmail(parsed.data.email);
       } else {
         setErrors({ password: "Invalid email or password" });
       }
@@ -276,9 +276,37 @@ function AuthPage() {
               We sent a verification link to <strong>{pendingEmail}</strong>. Tap the link in
               that email and you will be taken straight into your account.
             </p>
+            <p className="mt-3 text-xs text-muted-foreground">
+              Didn't get it, or the link expired? Check your spam folder, or send a new one.
+            </p>
+            <Button
+              className="mt-4 w-full"
+              disabled={busy}
+              onClick={async () => {
+                setBusy(true);
+                const { error } = await supabase.auth.resend({
+                  type: "signup",
+                  email: pendingEmail,
+                  options: { emailRedirectTo: `${window.location.origin}/verified` },
+                });
+                setBusy(false);
+                if (error) {
+                  toast.error(
+                    error.message.toLowerCase().includes("rate limit") ||
+                      error.message.toLowerCase().includes("seconds")
+                      ? "Please wait a minute before requesting another email."
+                      : error.message,
+                  );
+                } else {
+                  toast.success(`A new verification email was sent to ${pendingEmail}.`);
+                }
+              }}
+            >
+              {busy ? "Sending…" : "Resend email"}
+            </Button>
             <Button
               variant="ghost"
-              className="mt-5"
+              className="mt-2"
               onClick={() => switchMode("login")}
             >
               Back to login
