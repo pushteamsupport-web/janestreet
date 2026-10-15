@@ -129,7 +129,10 @@ function Index() {
         </section>
       </main>
       <footer className="shrink-0 border-t border-border px-5 py-3 text-center text-xs leading-relaxed text-muted-foreground">
-        © 2026 Jane Street Group, LLC. All rights reserved | Privacy
+        © 2026 Jane Street Group, LLC. All rights reserved{"\u00A0\u00A0"}|{"\u00A0\u00A0"}
+        <Link to="/privacy" className="underline-offset-2 hover:underline">Privacy</Link>
+        {"\u00A0\u00A0"}|{"\u00A0\u00A0"}
+        <Link to="/terms" className="underline-offset-2 hover:underline">Terms of Service</Link>
       </footer>
     </div>
   );

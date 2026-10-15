@@ -1,3 +1,5 @@
+import { SecuritySettings } from "@/components/SecuritySettings";
+import { LegalEditor } from "@/components/LegalPage";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -687,9 +689,12 @@ function AdminShell({
         )}
 
         {section === "settings" && (
-          <p className="mt-5 rounded-2xl border border-border bg-card p-5 text-sm text-muted-foreground">
-            Account settings live on the Settings &amp; Security page.
-          </p>
+          <div className="mt-5 max-w-2xl space-y-6">
+            <SecuritySettings currentEmail={email} />
+            <h2 className="pt-2 text-lg font-semibold">Website pages</h2>
+            <LegalEditor slug="privacy" />
+            <LegalEditor slug="terms" />
+          </div>
         )}
       </main>
     </div>
