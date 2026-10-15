@@ -1,4 +1,5 @@
-- [ ] Underline footer legal links.
-- [ ] Remove Google button from sign-in and sign-up.
-- [ ] Confirm saved cases immediately and show them on the dashboard without waiting for photos.
-- [ ] Test case submission and page changes.
+- [x] Underline footer legal links.
+- [x] Remove Google button from sign-in and sign-up.
+- [x] Confirm saved cases immediately and show them on the dashboard without waiting for photos.
+- [x] Test case confirmation, cache update, and failed saves; check public pages in browser.
+- [ ] Verify live signed-in case filing — blocked until the user signs in or selects an account for testing.

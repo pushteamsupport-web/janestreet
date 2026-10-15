@@ -19,6 +19,8 @@ export const Route = createFileRoute("/forgot-password")({
           "Request a secure password reset link for your Jane Street account.",
       },
       { property: "og:title", content: "Reset Your Password" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       {
         property: "og:description",
         content: "Request a secure password reset link by email.",
