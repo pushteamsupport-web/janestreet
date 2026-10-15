@@ -28,9 +28,9 @@ vi.mock("@/lib/cases", () => ({
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {
     auth: { getUser: async () => ({ data: { user: { id: "client-id" } } }) },
-    from: (table: string) => ({
+    from: () => ({
       select: () => ({
-        order: async () => ({ data: [], error: null }),
+        order: () => new Promise(() => {}),
         eq: () => ({ maybeSingle: async () => ({ data: null, error: null }) }),
       }),
       insert: () => ({ select: () => ({ single: mocks.save }) }),
