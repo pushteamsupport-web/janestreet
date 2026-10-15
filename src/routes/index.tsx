@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Lock, Headset } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,11 @@ const STEPS = [
 ];
 
 function Index() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    videoRef.current?.play().catch(() => {});
+  }, []);
 
   return (
     <div className="relative flex h-dvh min-h-0 flex-col overflow-hidden bg-background">
