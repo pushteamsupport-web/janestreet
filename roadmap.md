@@ -2,4 +2,5 @@
 - [x] Remove Google button from sign-in and sign-up.
 - [x] Confirm saved cases immediately and show them on the dashboard without waiting for photos.
 - [x] Test case confirmation, cache update, and failed saves; check public pages in browser.
+- [x] Remove the landing page background video.
 - [ ] Verify live signed-in case filing — blocked until the user signs in or selects an account for testing.
