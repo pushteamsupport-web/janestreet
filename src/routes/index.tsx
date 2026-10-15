@@ -70,9 +70,6 @@ function Index() {
             <br />
             of what fraud took from you
           </h1>
-          <p className="mt-2 text-xs leading-snug text-muted-foreground min-[430px]:text-sm lg:mt-3 lg:text-base">
-            Start your case in minutes. It's free — you only pay 15% government tax after a completed recovery.
-          </p>
 
           <ul className="mt-3 flex flex-col items-start gap-1.5 lg:mt-4 lg:gap-2">
             {BADGES.map(({ icon: Icon, label, tone }) => (
