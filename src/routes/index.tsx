@@ -57,7 +57,7 @@ function Index() {
     <div className="relative flex h-dvh min-h-0 flex-col overflow-hidden bg-background">
       <video
         ref={videoRef}
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover opacity-25"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover opacity-60"
         src={landingBg.url}
         autoPlay
         loop
