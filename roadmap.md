@@ -4,3 +4,6 @@
 - [x] Test case confirmation, cache update, and failed saves; check public pages in browser.
 - [x] Remove the landing page background video.
 - [ ] Verify live signed-in case filing — blocked until the user signs in or selects an account for testing.
+- [ ] Replace signup email links with six-digit verification and resend on the website.
+- [ ] Configure code-based confirmation emails and hosted six-digit settings.
+- [ ] Test code verification, rejection, and resend.
