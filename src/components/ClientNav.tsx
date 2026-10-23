@@ -50,7 +50,11 @@ export function ClientNav({
       <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-5 py-3">
         <div className="flex items-center gap-1">
           {showBack ? <BackButton /> : null}
-          <Link to="/" className="flex items-center">
+          <Link
+            to="/dashboard"
+            aria-label="Go to your dashboard"
+            className="flex items-center"
+          >
             <BrandMark />
           </Link>
         </div>
