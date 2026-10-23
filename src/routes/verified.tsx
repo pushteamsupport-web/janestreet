@@ -1,6 +1,4 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { EmailVerification } from "@/components/EmailVerification";
 import { BrandMark } from "@/components/BrandMark";
 
@@ -28,26 +26,6 @@ export const Route = createFileRoute("/verified")({
 
 function Verified() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    let done = false;
-    const go = () => {
-      if (done) return;
-      done = true;
-      navigate({ to: "/dashboard", replace: true });
-    };
-
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) go();
-    });
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) go();
-    });
-
-    return () => {
-      sub.subscription.unsubscribe();
-    };
-  }, [navigate]);
 
   return (
     <div className="surface-hero flex min-h-screen flex-col">
