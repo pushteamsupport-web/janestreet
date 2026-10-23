@@ -1,13 +1,14 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { z } from "zod";
-import { MailCheck, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { fetchMyRole } from "@/hooks/useRole";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "@/components/BrandMark";
 import { PasswordInput } from "@/components/PasswordInput";
+import { EmailVerification } from "@/components/EmailVerification";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -192,9 +193,7 @@ function AuthPage() {
       return;
     }
 
-    // Email confirmation is disabled: a session comes back immediately, so go
-    // straight into the app. The "verify your email" screen only shows if the
-    // backend ever re-enables confirmation.
+    // Hosted confirmation settings determine whether verification is required.
     if (data.session) {
       await goHome();
       return;
@@ -221,7 +220,8 @@ function AuthPage() {
 
     if (error) {
       if (error.message.toLowerCase().includes("not confirmed")) {
-        toast.error("Please verify your email first. Check your inbox for the link.");
+        setOtp("");
+        setPendingEmail(parsed.data.email);
       } else {
         setErrors({ password: "Invalid email or password" });
       }
@@ -269,21 +269,7 @@ function AuthPage() {
             </Button>
           </div>
         ) : pendingEmail ? (
-          <div className="rounded-xl border border-border bg-card p-6 text-center shadow-elevated">
-            <MailCheck className="mx-auto h-8 w-8 text-primary" aria-hidden="true" />
-            <h1 className="mt-4 text-xl font-semibold">Verify your email</h1>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              We sent a verification link to <strong>{pendingEmail}</strong>. Tap the link in
-              that email and you will be taken straight into your account.
-            </p>
-            <Button
-              variant="ghost"
-              className="mt-5"
-              onClick={() => switchMode("login")}
-            >
-              Back to login
-            </Button>
-          </div>
+          <EmailVerification email={pendingEmail} onVerified={continueAfterPassword} onBack={() => switchMode("login")} />
         ) : (
           <div className="rounded-2xl border border-border bg-card p-6 shadow-elevated">
             <h1 className="text-center text-2xl font-bold">
