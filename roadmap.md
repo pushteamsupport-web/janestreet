@@ -4,7 +4,6 @@
 - [x] Test case confirmation, cache update, and failed saves; check public pages in browser.
 - [x] Remove the landing page background video.
 - [ ] Verify live signed-in case filing — blocked until the user signs in or selects an account for testing.
-- [x] Point the WhatsApp icon at +13069127461.
-- [x] Restore email-link signup confirmation and resend; remove the signup code form without changing Authenticator security.
-- [x] Test confirmed-session, PKCE, expired and missing-session callbacks, link resend and cooldown.
-- [ ] Verify actual confirmation email delivery and hosted template — no recipient inbox is available; default Cloud Auth confirmation links are used and no custom email templates exist in this project.
+- [x] Add six-digit signup verification and resend on the website.
+- [ ] Activate code-based confirmation emails — requires a connected sending domain; user must disable auto-confirm and set Email OTP length to 6 in More → Users → Auth settings → Email.
+- [x] Test six-digit verification, rejection, and resend; browser checks invalid-code validation. Real email delivery remains blocked by sender setup.
