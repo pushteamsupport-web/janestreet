@@ -4,6 +4,7 @@
 - [x] Test case confirmation, cache update, and failed saves; check public pages in browser.
 - [x] Remove the landing page background video.
 - [ ] Verify live signed-in case filing — blocked until the user signs in or selects an account for testing.
+- [x] Point the WhatsApp icon at +13069127461.
 - [x] Restore email-link signup confirmation and resend; remove the signup code form without changing Authenticator security.
 - [x] Test confirmed-session, PKCE, expired and missing-session callbacks, link resend and cooldown.
 - [ ] Verify actual confirmation email delivery and hosted template — no recipient inbox is available; default Cloud Auth confirmation links are used and no custom email templates exist in this project.
