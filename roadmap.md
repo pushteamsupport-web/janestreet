@@ -3,8 +3,7 @@
 - [x] Confirm saved cases immediately and show them on the dashboard without waiting for photos.
 - [x] Test case confirmation, cache update, and failed saves; check public pages in browser.
 - [x] Remove the landing page background video.
-- [x] Verify live signed-in case filing — done with a signed-in client session; test case and its photo record removed.
+- [ ] Verify live signed-in case filing — blocked until the user signs in or selects an account for testing.
 - [x] Add six-digit signup verification and resend on the website.
 - [ ] Activate code-based confirmation emails — requires a connected sending domain; user must disable auto-confirm and set Email OTP length to 6 in More → Users → Auth settings → Email.
 - [x] Test six-digit verification, rejection, and resend; browser checks invalid-code validation. Real email delivery remains blocked by sender setup.
-- [x] Keep logged-in users on their dashboard when they tap the app logo instead of returning to the landing page.
