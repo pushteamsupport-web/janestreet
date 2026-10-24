@@ -19,7 +19,7 @@ import {
 } from "@/lib/chat";
 
 /** Update this number to your live WhatsApp support line. */
-const WHATSAPP_LINK = "https://wa.me/13069127461";
+const WHATSAPP_LINK = "https://wa.me/12025550147";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (

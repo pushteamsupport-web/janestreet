@@ -269,7 +269,7 @@ function AuthPage() {
             </Button>
           </div>
         ) : pendingEmail ? (
-          <EmailVerification email={pendingEmail} onBack={() => switchMode("login")} />
+          <EmailVerification email={pendingEmail} onVerified={continueAfterPassword} onBack={() => switchMode("login")} />
         ) : (
           <div className="rounded-2xl border border-border bg-card p-6 shadow-elevated">
             <h1 className="text-center text-2xl font-bold">
