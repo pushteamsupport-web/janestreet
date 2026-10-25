@@ -4,6 +4,7 @@
 - [x] Test case confirmation, cache update, and failed saves; check public pages in browser.
 - [x] Remove the landing page background video.
 - [x] Verify live signed-in case filing — done with a signed-in client session; test case and its photo record removed.
-- [ ] Restore signup confirmation links and remove the email code-entry screen.
-- [ ] Check confirmation-link handling and resend; real inbox delivery requires a recipient's confirmation.
+- [x] Restore signup confirmation links and remove the email code-entry screen.
+- [x] Test confirmed-account checks, resend return URL, and expired-link rejection; browser confirms the link notice and expired-link state.
+- [ ] Verify a real emailed signup link end-to-end — requires inbox access and a fresh signup confirmation.
 - [x] Keep logged-in users on their dashboard when they tap the app logo instead of returning to the landing page.
