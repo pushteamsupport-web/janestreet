@@ -1,58 +1,59 @@
-import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { EmailVerification } from "@/components/EmailVerification";
 
-const { verifyOtp, resend } = vi.hoisted(() => ({ verifyOtp: vi.fn(), resend: vi.fn() }));
-vi.mock("@/integrations/supabase/client", () => ({ supabase: { auth: { verifyOtp, resend } } }));
+const { getUser, resend, unsubscribe, onAuthStateChange } = vi.hoisted(() => ({
+  getUser: vi.fn(), resend: vi.fn(), unsubscribe: vi.fn(), onAuthStateChange: vi.fn(),
+}));
+vi.mock("@/integrations/supabase/client", () => ({ supabase: { auth: { getUser, resend, onAuthStateChange } } }));
 
-afterEach(() => { cleanup(); vi.clearAllMocks(); vi.useRealTimers(); });
+beforeEach(() => {
+  window.history.replaceState({}, "", "/verified");
+  getUser.mockResolvedValue({ data: { user: null }, error: null });
+  onAuthStateChange.mockReturnValue({ data: { subscription: { unsubscribe } } });
+});
+afterEach(() => { cleanup(); vi.clearAllMocks(); });
 
-describe("Six-digit signup verification", () => {
-  it("rejects fewer than six digits without checking or signing in", () => {
-    const onVerified = vi.fn();
-    render(<EmailVerification email="client@example.com" onVerified={onVerified} onBack={vi.fn()} />);
-    fireEvent.change(screen.getByLabelText("Six-digit email code"), { target: { value: "12345" } });
-    fireEvent.click(screen.getByRole("button", { name: "Verify and continue" }));
-    expect(verifyOtp).not.toHaveBeenCalled();
-    expect(onVerified).not.toHaveBeenCalled();
-  });
-
-  it("verifies the six-digit signup code and continues only with a session", async () => {
-    verifyOtp.mockResolvedValueOnce({ data: { session: { user: { id: "client-id" } } }, error: null });
-    const onVerified = vi.fn();
-    render(<EmailVerification email="client@example.com" onVerified={onVerified} onBack={vi.fn()} />);
-    fireEvent.change(screen.getByLabelText("Six-digit email code"), { target: { value: "123456" } });
-    fireEvent.click(screen.getByRole("button", { name: "Verify and continue" }));
-    await waitFor(() => expect(onVerified).toHaveBeenCalledOnce());
-    expect(verifyOtp).toHaveBeenCalledWith({ email: "client@example.com", token: "123456", type: "signup" });
-  });
-
-  it("does not continue after a rejected code", async () => {
-    verifyOtp.mockResolvedValueOnce({ data: { session: null }, error: { message: "expired" } });
-    const onVerified = vi.fn();
-    render(<EmailVerification email="client@example.com" onVerified={onVerified} onBack={vi.fn()} />);
-    fireEvent.change(screen.getByLabelText("Six-digit email code"), { target: { value: "654321" } });
-    fireEvent.click(screen.getByRole("button", { name: "Verify and continue" }));
-    await waitFor(() => expect(screen.getByRole("alert")).toBeInTheDocument());
-    expect(onVerified).not.toHaveBeenCalled();
-  });
-
-  it("resends signup verification for the entered address", async () => {
+describe("Signup confirmation links", () => {
+  it("resends a signup link returning to the same-origin confirmation page", async () => {
     resend.mockResolvedValueOnce({ error: null });
     render(<EmailVerification onVerified={vi.fn()} onBack={vi.fn()} />);
     fireEvent.change(screen.getByLabelText("Email address"), { target: { value: "client@example.com" } });
-    fireEvent.click(screen.getByRole("button", { name: "Resend code" }));
-    await waitFor(() => expect(resend).toHaveBeenCalledWith({ type: "signup", email: "client@example.com" }));
-    await waitFor(() => expect(screen.getByRole("button", { name: "Resend code in 60s" })).toBeDisabled());
+    fireEvent.click(screen.getByRole("button", { name: "Resend verification link" }));
+    await waitFor(() => expect(resend).toHaveBeenCalledWith({
+      type: "signup", email: "client@example.com", options: { emailRedirectTo: `${window.location.origin}/verified` },
+    }));
   });
 
-  it("waits 60 seconds before allowing another signup code", async () => {
-    vi.useFakeTimers();
-    render(<EmailVerification email="client@example.com" onVerified={vi.fn()} onBack={vi.fn()} />);
-    expect(screen.getByRole("button", { name: "Resend code in 60s" })).toBeDisabled();
-    for (let second = 0; second < 60; second++) {
-      await act(async () => { vi.advanceTimersByTime(1000); });
-    }
-    expect(screen.getByRole("button", { name: "Resend code" })).toBeEnabled();
+  it("continues only after the server confirms the email", async () => {
+    getUser.mockResolvedValueOnce({ data: { user: { id: "client-id", email_confirmed_at: "2026-10-25T01:12:00Z" } }, error: null });
+    const onVerified = vi.fn();
+    render(<EmailVerification onVerified={onVerified} onBack={vi.fn()} />);
+    await waitFor(() => expect(onVerified).toHaveBeenCalledOnce());
+  });
+
+  it("does not continue for an unconfirmed account", async () => {
+    getUser.mockResolvedValueOnce({ data: { user: { id: "client-id", email_confirmed_at: null } }, error: null });
+    const onVerified = vi.fn();
+    render(<EmailVerification onVerified={onVerified} onBack={vi.fn()} />);
+    await waitFor(() => expect(getUser).toHaveBeenCalledOnce());
+    expect(onVerified).not.toHaveBeenCalled();
+  });
+
+  it("does not continue when the server rejects a session", async () => {
+    getUser.mockResolvedValueOnce({ data: { user: null }, error: { message: "expired" } });
+    const onVerified = vi.fn();
+    render(<EmailVerification onVerified={onVerified} onBack={vi.fn()} />);
+    await waitFor(() => expect(getUser).toHaveBeenCalledOnce());
+    expect(onVerified).not.toHaveBeenCalled();
+  });
+
+  it("does not continue from an expired link even with an existing confirmed session", async () => {
+    window.history.replaceState({}, "", "/verified#error=access_denied&error_code=otp_expired");
+    getUser.mockResolvedValueOnce({ data: { user: { email_confirmed_at: "2026-10-25" } }, error: null });
+    const onVerified = vi.fn();
+    render(<EmailVerification onVerified={onVerified} onBack={vi.fn()} />);
+    expect(onVerified).not.toHaveBeenCalled();
+    expect(getUser).not.toHaveBeenCalled();
   });
 });
